@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analyze Review</title>
+</head>
+<body>
+    <h1>Analyze a Single Review</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="review_text">Review:</label>
+        <textarea id="review_text" name="review_text" required></textarea>
+        <button type="submit">Analyze</button>
+    </form>
+</body>
+</html>

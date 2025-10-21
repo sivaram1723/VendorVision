@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Live Sentiment Analysis</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #246470eb;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .info1 {
+            color: #7f8c8d;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .analysis-form {
+            text-align: center;
+            margin: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            resize: vertical;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: #fff;
+            font-family: "Roboto", sans-serif;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #357ab8;
+        }
+
+        .sentiment-result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .positive {
+            background-color: #d4edda;
+            border-color: #155724;
+            color: #155724;
+        }
+
+        .negative {
+            background-color: #f8d7da;
+            border-color: #721c24;
+            color: #721c24;
+        }
+
+        .neutral {
+            background-color: #e2e3e5;
+            border-color: #6c757d;
+            color: #6c757d;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+            color: #21618c;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Live Sentiment Analysis</h1>
+    <p class="info1">Type or paste the text to be analysed below</p>
+    <div class="analysis-form">
+        <textarea id="reviewText" rows="4" placeholder="Enter your review here..."></textarea>
+        <button onclick="analyzeSentiment()">Analyze Sentiment</button>
+    </div>
+
+    <div id="sentimentResult" class="sentiment-result">
+        <h3>Analysis Result:</h3>
+        <p><strong>Sentiment:</strong> <span id="sentiment"></span></p>
+        <p><strong>Score:</strong> <span id="score"></span></p>
+    </div>
+
+    <a href="{% url 'index' %}" class="back-link">← Back to Main Page</a>
+
+    <script>
+        function analyzeSentiment() {
+            const reviewText = document.getElementById('reviewText').value;
+            if (!reviewText.trim()) {
+                alert('Please enter a review text');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('review_text', reviewText);
+
+            fetch('/analyze_live_review/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('sentimentResult');
+                const sentimentSpan = document.getElementById('sentiment');
+                const scoreSpan = document.getElementById('score');
+
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'sentiment-result ' + data.sentiment.toLowerCase();
+                sentimentSpan.textContent = data.sentiment;
+                scoreSpan.textContent = data.sentiment_score;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while analyzing the sentiment');
+            });
+        }
+    </script>
+</body>
+</html>
