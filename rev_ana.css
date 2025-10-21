@@ -1,0 +1,92 @@
+:root {
+    --primary-bg: #246470eb;
+    --button-colour: #2d5d65;
+    --primary-font: "Faculty Glyphic", sans-serif;
+    --button-hover: #2d5d65;
+    --button-color2: #43cee676;
+    --secondary-font: #fdebd6;
+}
+
+body {
+    font-family: var(--primary-font);
+    color: #fdebd6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--primary-bg);
+}
+
+h1{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 40px 19px;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.info1{
+    padding: 10px 20px;
+}
+
+.analysis-form {
+    margin: 20px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    font-family: "Roboto", sans-serif;
+    font-size: large;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: var(--button-color2);
+    color: white;
+    font-family: var(--primary-font);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+}
+
+.sentiment-result {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: none;
+}
+
+.positive {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.negative {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.neutral {
+    background-color: #e2e3e5;
+    border-color: #d6d8db;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: bisque;
+    text-decoration: none;
+}
+.back-link:hover {
+    text-decoration: underline;
+}

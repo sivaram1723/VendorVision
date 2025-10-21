@@ -1,0 +1,80 @@
+body {
+    font-family: 'Faculty Glyphic', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin: 20px 0;
+    color: #ec1850;
+}
+
+h3 {
+    color: #f91515;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.info1, .info2 {
+    font-size: 1rem;
+    margin: 15px;
+}
+
+form {
+    margin: 20px auto;
+    display: inline-block;
+    text-align: left;
+}
+
+.inputContainer {
+    margin: 10px 0;
+}
+
+.input {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    width: 250px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #12e2d1;
+    color: #050200;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #58e4c3;
+}
+
+a.live-analysis-link {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #ec1850;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+a.live-analysis-link:hover {
+    color: #f91515;
+}

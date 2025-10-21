@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Reviews</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.7;
+            color: #333;
+            background-color: #f4f6f9;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .review-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .review-list li {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0); /* Transparent background */
+        }
+        .review-list .review-positive {
+            background-color: rgba(46, 125, 50, 0.5); /* Transparent green */
+            border-left: 5px solid #2e7d32;
+        }
+        .review-list .review-negative {
+            background-color: rgba(211, 47, 47, 0.5); /* Transparent red */
+            border-left: 5px solid #d32f2f;
+        }
+        .review-list li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .review-details {
+            display: none; /* Initially hidden */
+            padding-top: 10px;
+        }
+        .review-preview {
+            display: inline-block;
+            max-width: 50%; /* Show only half of the review initially */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .see-more {
+            color: #3498db;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .analyze-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .analyze-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Star Rating Styles */
+        .review-details strong:nth-child(2)::after {
+            content: "";
+            font-family: "Font Name With Star Icons"; /* Replace with your font */
+            font-size: 1.2em;
+            color: #f1c40f; /* Change color for stars */
+            margin-left: 5px;
+            display: inline-block;
+        }
+
+        /* Define star ratings for different values */
+        .review-details strong:nth-child(2)::after {
+            content: "★"; /* One full star */
+        }
+        .review-details strong:nth-child(2)[data-rating="2"]::after {
+            content: "★★"; /* Two full stars */
+        }
+        .review-details strong:nth-child(2)[data-rating="3"]::after {
+            content: "★★★"; /* Three full stars */
+        }
+        .review-details strong:nth-child(2)[data-rating="4"]::after {
+            content: "★★★★"; /* Four full stars */
+        }
+        .review-details strong:nth-child(2)[data-rating="5"]::after {
+            content: "★★★★★"; /* Five full stars */
+        }
+        .review-details strong:nth-child(2)[data-rating="0"]::after {
+            content: "☆☆☆☆☆"; /* Empty stars for rating 0 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Business Reviews</h1>
+        <ul class="review-list">
+            {% for result in sentiment_results %}
+                <li class="review-{{ result.sentiment|lower }} 
+                    {% if result.sentiment == 'Positive' %}review-positive{% elif result.sentiment == 'Negative' %}review-negative{% endif %}">
+                    <strong>Review:</strong> <span class="review-preview">{{ result.review|truncatechars:100 }}</span>
+                    <div class="review-details">
+                        <p>{{ result.review }}</p>
+                        <strong>Rating:</strong> <strong data-rating="{{ result.rating }}"></strong>
+                        <strong>Author:</strong> {{ result.author }}<br>
+                        <strong>Sentiment:</strong> {{ result.sentiment }} ({{ result.sentiment_score|floatformat:2 }})
+                    </div>
+                    <span class="see-more" onclick="toggleDetails(this)">See more details</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'review_dashboard' place_id=place_id %}" class="analyze-btn">Analyze Reviews</a>
+    </div>
+    <script>
+        function toggleDetails(button) {
+            const parentLi = button.closest('li'); // Get the parent list item
+            const details = parentLi.querySelector('.review-details'); // Find the review-details section
+            const preview = parentLi.querySelector('.review-preview'); // Find the review-preview section
+
+            if (details.style.display === 'block') {
+                // Hide details and show preview
+                details.style.display = 'none';
+                preview.style.display = 'inline-block';
+                button.textContent = 'See more details';
+            } else {
+                // Show details and hide preview
+                details.style.display = 'block';
+                preview.style.display = 'none';
+                button.textContent = 'Show less';
+            }
+        }
+    </script>
+</body>
+</html>

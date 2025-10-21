@@ -1,0 +1,14 @@
+function fetchBranches() {
+    const placeName = document.getElementById('place_name').value;
+    const cityName = document.getElementById('city').value;
+
+    fetch(`/fetch-branches?place_name=${placeName}&city_name=${cityName}`)
+        .then(response => response.json())
+        .then(branches => {
+            const branchSelect = document.getElementById('branch');
+            branchSelect.innerHTML = branches.map(branch =>
+                `<option value="${branch.id}">${branch.name} - ${branch.address}</option>`
+            ).join('');
+        })
+        .catch(error => console.error("Error fetching branches:", error));
+}

@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Select Branch</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Faculty+Glyphic&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="sel_bran.css"> -->
+    <link rel="stylesheet" href="{% static 'css\sel_bran.css' %}">
+</head>
+<body>
+    <h1>Select a Branch</h1>
+    <ul>
+        {% for branch in branches %}
+            <li>
+                <strong>{{ branch.name }}</strong>
+                <p>{{ branch.address }}</p>
+                <a href="{% url 'fetch_reviews_and_sentiment' branch.place_id %}">Analyze Reviews</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
